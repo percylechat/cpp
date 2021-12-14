@@ -23,6 +23,10 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
         typedef typename allocator_type::difference_type difference_type;
         typedef iterator_vector<value_type> iterator;
         // typedef vector_iterator<value_type const> const_iterator;
+
+////////////////////////////////////////////////////////////////////////
+// CONSTRUCTEURS / DESTRUCTEUR
+////////////////////////////////////////////////////////////////////////
         explicit ft_vector(){
             this->_data = NULL;
             this->_usage = 0;
@@ -30,18 +34,21 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
         }
         explicit ft_vector(size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type()){
-            allocator_type alloca = alloc;
-            this->_data = alloca.allocate(n);
+            // allocator_type alloca = alloc;
+            this->_alloc = alloc;
+            this->_data = this->alloc(n);
+            // this->_data = alloca.allocate(n);
             size_type i = 0;
             while (i < n){
-                alloca.construct(&this->_data[i], val);
+                this->_alloc.construct(&this->_data[i], val);
                 i++;
             }
-            this->_capacity = n;
+            // this->_capacity = n;
             this->_usage = n;
         }
         template <class InputIterator>
         ft_vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+            //ITERATOR should have size func
             InputIterator temp = first;
             size_type i = 0;
             while (temp != last){
@@ -49,10 +56,10 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
                 i++;
             }
             size_type j = 0;
-            allocator_type alloca = alloc;
-            this->_data = alloca.allocate(i);
+            this->_alloc =  alloc;
+            this->_data = this->_alloc.allocate(i);
             while (j != i){
-                alloca.construct(&this->_data[j], first);
+                this->_alloc.construct(&this->_data[j], first);
                 j++;
                 first++;
             }
@@ -61,20 +68,21 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
         }
         ft_vector(const ft_vector& x){
             //need x allocator!!!!!!
-            allocator_type alloc = allocator_type();
-            this->_data = alloc.allocate(x._capacity);
+            // allocator_type alloc = allocator_type();
+            this->_alloc = x._alloc;
+            this->_data = this->_alloc.allocate(x._capacity);
             size_type i = 0;
             while (i < x._capacity){
-                alloc.construct(&this->_data[i], x._data[i]);
+                this->_alloc.construct(&this->_data[i], x._data[i]);
                 i++;
             }
             this->_capacity = x._capacity;
             this->_usage = x._usage;
         }
         ~ft_vector(){
-            allocator_type alloc = allocator_type();
+            // allocator_type alloc = allocator_type();
             this->clear();
-            alloc.deallocate(this->_data, this->_capacity);
+            this->_alloc.deallocate(this->_data, this->_capacity);
         }
 ////////////////////////////////////////////////////////////////////////
 // ITERATOR
@@ -101,22 +109,21 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
             return this->_usage;
         }
         size_type max_size() const{
-            allocator_type alloc;
-            return alloc.max_size();
+            // allocator_type alloc;
+            return this->_alloc.max_size();
         }
         void reserve (size_type n){
             if (n > this->_capacity)
             {
-                pointer buf;
-                allocator_type alloc = alloc;
-                buf = alloc.allocate(n);
+                // allocator_type alloc = alloc;
+                pointer buf = this->alloc(n);
                 size_type i = 0;
                 while (i < this->_usage){
-                    alloc.construct(&buf[i], this->_data[i]);
+                    this->_alloc.construct(&buf[i], this->_data[i]);
                     i++;
                 }
-                alloc.deallocate(this->_data, this->_capacity);
-                this->_capacity = n;
+                this->_alloc.deallocate(this->_data, this->_capacity);
+                // this->_capacity = n;
                 this->_data = buf;
             }
         }
@@ -157,11 +164,10 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
 // MODIFY
 ////////////////////////////////////////////////////////////////////////
         void clear(){
-            allocator_type alloc = allocator_type();
+            // allocator_type alloc = allocator_type();
             pointer p = &this->_data[0];
-            while(this->_usage < 0)
-            {
-                alloc.destroy(p+ (this->_usage - 1));
+            while (this->_usage > 0){
+                this->_alloc.destroy(p + (this->_usage - 1));
                 this->_usage--;
             }
         }
@@ -173,22 +179,22 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
             iterator temp = this->begin();
             if (this->_usage == this->_capacity){
                 pointer buf; //je crée nv pointeur pr data
-                allocator_type alloc = allocator_type(); //je cree allocateur
-                buf = alloc.allocate(this->_capacity + 1); // j'utilise l allocateur pr allouer dans buf
+                // allocator_type alloc = allocator_type(); //je cree allocateur
+                buf = this->alloc(this->_capacity + 1); // j'utilise l allocateur pr allouer dans buf
                 size_type i = 0;
                 if (pos != this->begin()){
                     pos--;
                     while (temp != pos){
-                        alloc.construct(&buf[i], this->_data[i]);
+                        this->_alloc.construct(&buf[i], this->_data[i]);
                         i++;
                         temp++;
                     }
                 }
-                alloc.construct(&buf[i], value);
+                this->_alloc.construct(&buf[i], value);
                 iterator ret = &buf[i];
                 i++;
                 while (temp != this->end()){
-                    alloc.construct(&buf[i], this->_data[i]);
+                    this->_alloc.construct(&buf[i], this->_data[i]);
                     i++;
                     temp++;
                 }
@@ -196,11 +202,11 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
                     delete this->_data;
                 else{
                     this->clear();
-                    alloc.deallocate(this->_data, this->_capacity);
+                    this->_alloc.deallocate(this->_data, this->_capacity);
                 }
                 this->_data = buf;
                 this->_usage++;
-                this->_capacity++;
+                // this->_capacity++;
                 return ret;
             }
             else{
@@ -237,11 +243,11 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
 
             }
             else{
-                allocator_type alloc = allocator_type();
+                // allocator_type alloc = allocator_type();
                 this->clear();
                 size_type i = 0;
                 while (i < n){
-                    alloc.construct(&this->_data[i], val);
+                    this->_alloc.construct(&this->_data[i], val);
                     i++;
                 }
             }
@@ -249,19 +255,19 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
         void push_back(const value_type& val){
             if (this->_usage == this->_capacity){
                 pointer buf; //je crée nv pointeur pr data
-                allocator_type alloc = allocator_type(); //je cree allocateur
-                buf = alloc.allocate(this->_capacity + 1); // j'utilise l allocateur pr allouer dans buf
+                // allocator_type alloc = allocator_type(); //je cree allocateur
+                buf = this->_alloc.allocate(this->_capacity + 1); // j'utilise l allocateur pr allouer dans buf
                 size_type i = 0;
                 while (i < this->_capacity){
-                    alloc.construct(&buf[i], this->_data[i]);
+                    this->_alloc.construct(&buf[i], this->_data[i]);
                     i++;
                 }
-                alloc.construct(&buf[i], val);
+                this->_alloc.construct(&buf[i], val);
                 if (this->_capacity == 0)
                     delete this->_data;
                 else{
                     this->clear();
-                    alloc.deallocate(this->_data, this->_capacity);
+                    this->_alloc.deallocate(this->_data, this->_capacity);
                 }
                 this->_data = buf;
                 this->_usage++;
@@ -274,6 +280,7 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
             else {std::cerr << "issue between size and usage in push_back";}
         }
         void pop_back(){
+    // destroy?
             this->_data[this->_size - 1] = NULL;
             this->_size--;
         }
@@ -288,14 +295,14 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
             }
             else{
                 pointer buf;
-                allocator_type alloc = alloc;
-                buf = alloc.allocate(n);
+                // allocator_type alloc = alloc;
+                buf = this->_alloc.allocate(n);
                 size_type i = 0;
                 while (i < n){
-                    alloc.construct(&buf[i], this->_data[i]);
+                    this->_alloc.construct(&buf[i], this->_data[i]);
                     i++;
                 }
-                alloc.deallocate(this->_data, this->_capacity);
+                this->_alloc.deallocate(this->_data, this->_capacity);
                 this->_capacity = n;
                 this->_usage = n;
                 this->_data = buf;
@@ -312,10 +319,12 @@ template < class T, class Alloc = std::allocator<T> > class ft_vector{
         size_type _capacity;
         unsigned int _usage;
         pointer _data;
-        pointer alloc(size_type n, allocator_type alloc)
+        allocator_type _alloc;
+        pointer alloc(size_type n)
         {
             size_type tot = this->_capacity + (n + (n / 2));
-            pointer ret = alloc.allocate(tot);
+            pointer ret = this->_alloc.allocate(tot);
+            this->_capacity = tot;
             return ret;
         }
 };
