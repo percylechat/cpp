@@ -2,29 +2,12 @@
 #include <string>
 #include "vectorbis.hpp"
 // #include "iterator_vector.hpp"
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <vector>
+// #include "stack.hpp"
 
 int main(){
 	std::cout << "creating a few vectors" << std::endl;
-
-// ft_vector<int> first;                                // empty vector of ints
-// ft_vector<int> second (4,100);                       // four ints with value 100
-// ft_vector<int> third (second.begin(),second.end());  // iterating through second
-// ft_vector<int> fourth (third);                       // a copy of third
-
-// //   // the iterator constructor can also be used to construct from arrays:
-// int myints[] = {16,2,77,29};
-// ft_vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-
-//   std::cout << "The contents of fifth are:";
-//   for (ft_vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-//     std::cout << ' ' << *it << '\n';
-
-//   return 0;	
-
-
-
 
     ft_vector<int> test(4, 35);
 	ft_vector<std::string> bebe;
@@ -38,21 +21,55 @@ int main(){
 	std::cout << test[0] ;
 	std::cout << test[1] ;
 	std::cout << test[2] ;
-	std::cout << test[3] ;
-		std::cout << std::endl ;
+	std::cout << test[3] << std::endl << "print with ite" << std::endl;
 	ft_vector<std::string>::iterator baba = bebe.begin();
 	while (baba != bebe.end()){
 		std::cout << *baba;
 		baba++;
 	}
 
-	std::cout << std::endl ;
-	bebe.insert(bebe.end(), " coucou");
-	baba = bebe.begin();
-	while (baba != bebe.end()){
-		std::cout << *baba;
-		baba++;
+	std::cout << "\n insert deb:" << std::endl ;
+	ft_vector<std::string>::iterator baabaa = bebe.insert(bebe.begin(), "lol ");
+		std::cout << *baabaa << "\n" ;
+	std::cout << "\n insert end:" << std::endl ;
+	ft_vector<std::string>::iterator bubu = bebe.insert(bebe.end(), " coucou");
+	std::cout << *bubu ;
+	std::cout << "\n insert mult center:" << std::endl ;
+	bebe.insert(bebe.begin() + 2, 4, "doudou ");
+	std::cout << "\n insert mult center with iterator:" << std::endl ;
+		ft_vector<std::string> vivi;
+		vivi.push_back("percy ");
+		vivi.push_back("kero ");
+		vivi.push_back("Ivitch ");
+	bebe.insert(bebe.begin() + 4, vivi.begin(), vivi.end());
+
+	ft_vector<std::string>::iterator buubuu = bebe.begin();
+	std::cout << "check\n";
+	while (buubuu != bebe.end()){
+		std::cout << *buubuu;
+		buubuu++;
 	}
+
+	std::cout << "\n erase:" << std::endl ;
+	ft_vector<std::string>::iterator bvbv = bebe.erase(bebe.begin() + 2, bebe.begin() + 4);
+
+	ft_vector<std::string>::iterator buuubuuu = bebe.begin();
+	std::cout << "check\n";
+	while (buuubuuu != bebe.end()){
+		std::cout << *buuubuuu;
+		buuubuuu++;
+	}
+
+	std::cout << "\n pop back:" << std::endl ;
+	bebe.pop_back();
+		ft_vector<std::string>::iterator buuuubuuu = bebe.begin();
+	std::cout << "check\n";
+	while (buuuubuuu != bebe.end()){
+		std::cout << *buuuubuuu;
+		buuuubuuu++;
+	}
+
+//SWAP ASSIGN RESIZE
 
 	std::cout << std::endl ;
 	ft_vector<int> test2(test);
@@ -69,7 +86,15 @@ std::vector<int> test3;
 	std::vector<std::string> bibi;
 	std::cout << "my size: " << bebe.max_size() << std::endl;
 	std::cout << "normal size: " << bibi.max_size() << std::endl;
+ 
+	ft_vector<int> test4(test2.begin(), test2.end());
+		std::cout << "vector" << test4[0] ;
+	std::cout << test4[1] ;
+	std::cout << test4[2] ;
+	std::cout << test4[3] ;
+ 
     // test.push_back(4);
 
-
+	// stack<int, ft_vector<int> > lol(test2);
+	// std::cout << lol.empty();
 }

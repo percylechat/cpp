@@ -1,55 +1,44 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
-template<typename T> 
+#include <deque>
+#include "vectorbis.hpp"
 
-class ft_stack
+template <class T, class Container = ft_vector<T> > class stack
 {
-    protected:
-        T value_type;
-        typedef Container container_type;
-        typedef size size_type;
-        typedef struct s_info t_info
-        {
-            T el;
-            T *prev;
-        };
-
     public:
-        size {
-            
-        }
-    Return size (public member function )
+        typedef T value_type;
+        typedef Container container_type;
+        typedef typename container_type::size_type size_type;
+    private:
+        Container _content;
+    public:
+        explicit stack (const container_type& ctnr = container_type()) : _content(ctnr) {}
+        ~stack(void){}
+        bool empty() const { return this->_content.empty(); }
+        size_type size() const { return this->_content.size(); }
+        value_type& top() { return this->_content.back(); }
+        const value_type& top() const { return this->_content.back(); }
+        void push (const value_type& val) { this->_content.push_back(val); }
+        void pop() { this->_content.pop_back(); }
+        // template <class T, class Container>
+        bool operator== (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content == rhs._content; }
+        // template <class T, class Container>
+        bool operator!= (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content != rhs._content; }
+        // template <class T, class Container>
+        bool operator< (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content < rhs._content; }
+        // template <class T, class Container>
+        bool operator<= (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content <= rhs._content; }
+        // template <class T, class Container>
+        bool operator> (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content > rhs._content; }
+        // template <class T, class Container>
+        bool operator>= (const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+        { return lhs._content >= rhs._content; }
 };
 
-member type	definition	notes
-value_type	The first template parameter (T)	Type of the elements
-container_type	The second template parameter (Container)	Type of the underlying container
-size_type	an unsigned integral type	usually the same as size_t
-
-Member functions
-
-(constructor)
-    Construct stack (public member function )
-
-empty
-    Test whether container is empty (public member function )
-
-size
-    Return size (public member function )
-
-top
-    Access next element (public member function )
-
-push
-    Insert element (public member function )
-
-pop
-    Remove top element (public member function )
-
-Non-member function overloads
-
-relational operators
-    Relational operators for stack (function )
-
-#endif // !STACK_HPP
+#endif
