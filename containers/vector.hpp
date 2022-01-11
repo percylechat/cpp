@@ -5,7 +5,7 @@
 #include <memory> //allocator
 #include <iterator>
 #include <stdexcept> //OOB exception
-// #include "vector_iterator.hpp"
+#include "vector_iterator.hpp"
 #include "reverse_iterator.hpp"
 
 

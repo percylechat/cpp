@@ -1,7 +1,12 @@
+#ifndef MAP_HPP
+#define MAP_HPP
+
 #include <functional>
-#include "vector.hpp"
+// #include "vector.hpp"
+#include <iostream>
 #include "pair.hpp"
 #include "map_iterator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft{
 
@@ -11,13 +16,7 @@ struct N{
     N* l_child;
     N* r_child;
     N* mom;
-    // bool go_last;
-    N(P v, N* l, N* r, N* m): _content(v), l_child(l), r_child(r), mom(m){}//, go_last(false){}
-    //     this->_content = v;
-    //     this->l_child = l;
-    //     this->r_child = r;
-    //     this->mom = m;
-    // }
+    N(P v, N* l, N* r, N* m): _content(v), l_child(l), r_child(r), mom(m){}
 };
 
 template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
@@ -77,39 +76,20 @@ class map{
         template <class InputIterator>
         map(typename ft::enable_if<!ft::is_integral<InputIterator>::value_type, InputIterator>::type first,  InputIterator last, const key_compare& comp = key_compare(),
         const allocator_type& alloc = allocator_type()){
-        // map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-        // const allocator_type& alloc = allocator_type()){
-        //     this->_usage = 0;
-        //     this->_keyc = comp;
-        //     this->_alloc = alloc;
-        //     this->_end = new_n(value_type(key_type(), mapped_type()));
-        //     this->_usage = 0;
-        //     // std::cout << first->first << std::endl;
-        //     // first++;
-        //     //             std::cout << first->first << std::endl;
-        //     this->insert(first, last);
-        // }
-        // map(iterator first, iterator last, const key_compare& comp = key_compare(),
-        // const allocator_type& alloc = allocator_type()){
             this->_keyc = comp;
             this->_alloc = alloc;
             this->_end = new_n(value_type(key_type(), mapped_type()));
             this->_end->l_child = NULL;
             this->_end->r_child = NULL;
             this->_usage = 0;
-            // std::cout << first->first << std::endl;
-            // first++;
-            //             std::cout << first->first << std::endl;
             while (first != last){
                 this->insert(*first);
                 // std::cout << this->_base->_content.first << std::endl;
                 first++;
             }
-            // this->insert(first, last);
         }
         map(const map& x){
             *this = x;
-            // this->_end = NULL;
         }
         map& operator=(const map& x){
             if (this->_usage != 0)
@@ -128,15 +108,14 @@ class map{
         ~map(){
             if (this->_usage != 0){
                 while (this->_base->l_child != NULL){
-                    std::cout << this->_base->l_child->_content.first << std::endl;
+                    // std::cout << this->_base->l_child->_content.first << std::endl;
                     this->erase(iterator(this->_base->l_child));
                 }
                 while (this->_base->r_child != NULL && this->_base->r_child != this->_end){
-                    std::cout << this->_base->r_child->_content.first << std::endl;
+                    // std::cout << this->_base->r_child->_content.first << std::endl;
                     this->erase(iterator(this->_base->r_child));
                 }
-std::cout << "base " << this->_base->_content.first << std::endl;
-                
+                // std::cout << "base " << this->_base->_content.first << std::endl;
                 this->erase(iterator(this->_base));
             }
             this->n_alloc.destroy(this->_end);
@@ -151,7 +130,6 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             n* current = this->_base;
             while (current->l_child != NULL)
                 current = current->l_child;
-            // return map_iterator<value_type, n*>(current->_content, current);
             return iterator(current);
         }
         const_iterator begin() const{
@@ -166,53 +144,27 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             if (this->_usage < 1)
                 return iterator(this->_end);
             n* current = this->_base;
-            // while (current->r_child)
-            //     current = current->r_child;
             while (current && current->r_child)
 			    current = current->r_child;
-		// return iterator(temp);
             return iterator(current);
         }
         const_iterator end() const{
             if (this->_usage < 1)
-                // return const_iterator(this->_base);
-                                return const_iterator(this->_end);
-            // n* current = this->_base;
-            // while (current->r_child)
-            //     current = current->r_child;
+                return const_iterator(this->_end);
             return const_iterator(this->_end);
         }
-        // reverse_iterator rbegin(){
-        //     if (this->_usage <= 1)
-        //         return reverse_iterator(this->_base);
-            // pointer buf = r_child;
-            // while (r_child)
-            //     buf = r_child;
-        //     return reverse_iterator(buf);
-        // const_reverse_iterator rbegin() const{
-        //     if (this->_usage <= 1)
-        //         return const_reverse_iterator(this->_base);
-        //                 pointer buf = r_child;
-            // while (r_child)
-            //     buf = r_child;
-        //     return const_reverse_iterator(buf);
-        // }
-        // reverse_iterator rend(){
-        //     if (this->_usage <= 1)
-        //         return reverse_iterator(this->_base);
-        //     pointer buf = l_child;
-            // while (l_child)
-            //     buf = l_child;
-        //     return reverse_iterator(buf);
-        // }
-        // const_reverse_iterator rend() const{
-        //     if (this->_usage <= 1)
-        //         return const_reverse_iterator(this->_base);
-        //     pointer buf = l_child;
-            // while (l_child)
-                // buf = l_child;
-        //     return const_reverse_iterator(buf);
-        // }
+        reverse_iterator rbegin(){
+            return reverse_iterator(this->end());
+        }
+        const_reverse_iterator rbegin() const{
+            return const_reverse_iterator(this->end());
+        }
+        reverse_iterator rend(){
+            return reverse_iterator(this->begin());
+        }
+        const_reverse_iterator rend() const{
+            return const_reverse_iterator(this->begin());
+        }
 ////////////////////////////////////////////////////////////////////////
 // CAPACITY
 ////////////////////////////////////////////////////////////////////////
@@ -240,7 +192,6 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             if (this->_usage == 0){
                 // std::cout << "hello" << std::endl;
                 this->_base = new_n(val);
-                // this->_base->go_last = true;
                                 // std::cout << "hello" << std::endl;
                 this->_base->r_child = this->_end;
                 this->_end->mom = this->_base;
@@ -272,7 +223,6 @@ std::cout << "base " << this->_base->_content.first << std::endl;
                 this->_base->l_child = NULL;
                 this->_base->r_child = NULL;
                 this->gets_end(this->_base,current);
-                // this->_base->r_child = this->_end;
             }
             this->_base->mom = buf;
             // std::cout << "ME: " << this->_base->_content.first << " MUM: " << buf->_content.first ;
@@ -291,21 +241,7 @@ std::cout << "base " << this->_base->_content.first << std::endl;
         }
         template <class InputIterator>
         void insert (typename ft::enable_if<!ft::is_integral<InputIterator>::value_type, InputIterator>::type first, InputIterator last){
-        // void insert (InputIterator first, InputIterator last){
-            // InputIterator buf = first;
-            //             std::cout << "ok" << std::endl;
-            // iterator it = first;
-            // iterator ti = last;
-                            // std::cout << this->_usage << std::endl;
             while (first != last){
-
-                // key_type tmp = buf->first;
-                // mapped_type temp = buf->second;
-                // value_type temp = *buf;
-                // this->insert(temp);
-                // // this->insert(value_type(tmp, temp));
-                // std::cout << "ok " << it->first << &it->mom << std::endl;
-                // std::cout << first->first << std::endl;
                 pair<iterator,bool>ret = this->insert(*first);
                                 // std::cout << "hello" << std::endl;
                                 // std::cout << this->_base->_content.first << std::endl;
@@ -392,6 +328,48 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             else
                 return 1;
         }
+        iterator lower_bound (const key_type& k) {
+            iterator buf = this->begin();
+            while (buf != this->end()){
+                if (!this->_keyc(buf->first, k))
+                    return buf;
+                buf++;
+            }
+            return this->end();
+        }
+        const_iterator lower_bound (const key_type& k) const {
+            const_iterator buf = this->begin();
+            while (buf != this->end()){
+                if (!this->_keyc(buf->first, k))
+                    return const_iterator(buf);
+                buf++;
+            }
+            return this->end();
+        }
+        iterator upper_bound (const key_type& k) {
+            iterator buf = this->begin();
+            while (buf != this->end()){
+                if (this->_keyc(k, buf->first))
+                    return buf;
+                buf++;
+            }
+            return this->end();
+        }
+        const_iterator upper_bound (const key_type& k) const {
+            const_iterator buf = this->begin();
+            while (buf != this->end()){
+                if (this->_keyc(k, buf->first))
+                    return const_iterator(buf);
+                buf++;
+            }
+            return this->end();
+        }
+        pair<iterator,iterator> equal_range (const key_type& k) {
+		return pair<iterator, iterator>(this->lower_bound(k), this->upper_bound(k));
+	    }
+	    pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
+		    return pair<const_iterator, const_iterator>(this->lower_bound(k), this->upper_bound(k));
+	    }
 
         void clear(){ 
             while (this->_base->l_child != NULL)
@@ -399,8 +377,6 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             while (this->_base->r_child != NULL && this->_base->r_child != this->_end)
                 this->erase(iterator(this->_base->r_child));
             this->erase(iterator(this->_base));
-            // this->n_alloc.destroy(this->_end);
-            // this->n_alloc.deallocate(this->_end, 1);
             this->_usage = 0;
         }
         void erase (iterator position){
@@ -408,10 +384,10 @@ std::cout << "base " << this->_base->_content.first << std::endl;
                 return;
             n *pos = this->find(position);
             this->_usage--;
-            std::cout << "key " << pos->_content.first << " base " << this->_base->_content.first << std::endl;
+            // std::cout << "key " << pos->_content.first << " base " << this->_base->_content.first << std::endl;
             if (pos->l_child == NULL && pos->r_child == NULL)
             {
-                std::cout << "ping in 0" << pos->_content.first << std::endl;
+                // std::cout << "ping in 0" << pos->_content.first << std::endl;
                 if (pos->mom != NULL){
                     n* buf = pos->mom;
                     if (buf->l_child != NULL && buf->l_child == pos)
@@ -424,7 +400,7 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             }
             else if (pos->l_child != NULL && pos->r_child != NULL && pos->r_child != this->_end)
             {
-                std::cout << "ping in 2" << pos->_content.first << std::endl;
+                // std::cout << "ping in 2" << pos->_content.first << std::endl;
                 n *temp = pos->r_child;
                 n *temp1 = pos->l_child;
                 if (pos->mom != NULL){
@@ -435,17 +411,19 @@ std::cout << "base " << this->_base->_content.first << std::endl;
                         buf->r_child = temp;
                     temp->mom = buf;
                 }
-                else
+                else{
                     this->_base = temp;
+                    temp->mom = NULL;
+                }
                 while (temp->l_child != NULL)
                     temp = temp->l_child;
                 temp->l_child = temp1;
+                temp1->mom = temp;
                 this->n_alloc.destroy(pos);
                 this->n_alloc.deallocate(pos, 1);
-
             }
             else if (pos->r_child == this->_end && pos->l_child == NULL){
-                std::cout << "ping in 3" << pos->_content.first << std::endl;
+                // std::cout << "ping in 3" << pos->_content.first << std::endl;
                 if (pos->mom != NULL){
                     n* buf = pos->mom;
                     buf->r_child = this->_end;
@@ -455,11 +433,14 @@ std::cout << "base " << this->_base->_content.first << std::endl;
                 this->n_alloc.deallocate(pos, 1);
             }
             else if (pos->r_child == this->_end && pos->l_child != NULL){
-                std::cout << "ping in 4" << pos->_content.first << std::endl;
+                // std::cout << "ping in 4" << pos->_content.first << std::endl;
                 if (pos->mom != NULL){
                     n* buf = pos->mom;
                     buf->r_child = pos->l_child;
-                    pos->l_child->r_child = this->_end;
+                    n *temp = pos->l_child;
+                    while (temp->r_child != NULL)
+                        temp = temp->r_child;
+                    temp->r_child = this->_end;
                     pos->l_child->mom = buf;
                     this->_end->mom = pos->l_child;
                 }
@@ -467,7 +448,7 @@ std::cout << "base " << this->_base->_content.first << std::endl;
                 this->n_alloc.deallocate(pos, 1);
             }
             else if ((pos->r_child != NULL && pos->r_child != this->_end) || pos->l_child != NULL){
-                std::cout << "ping in 1" << pos->_content.first << std::endl;
+                // std::cout << "ping in 1" << pos->_content.first << std::endl;
                 n *temp;
                 if (pos->r_child != NULL)
                     temp = pos->r_child;
@@ -587,30 +568,6 @@ std::cout << "base " << this->_base->_content.first << std::endl;
             n* ret = this->_base;
             this->_base = current;
             return ret;
-            // if (this->_usage == 0)
-            //     return this->_end;
-            // if (this->_usage == 1 && (this->_keyc(this->_base->_content.first, it->first) == false)
-            // && (this->_keyc(it->first, this->_base->_content.first) == false))
-            //     return this->_base;
-            // std::cout << "test" << it->first << std::endl;
-            // n* current = this->_base;
-            // while (this->_base->l_child != NULL || (this->_base->r_child != NULL && this->_base->r_child != this->_end)){
-            //     if (this->_base->l_child != NULL && this->_keyc(it->first, this->_base->_content.first) == true)
-            //         this->_base = this->_base->l_child;
-            //     else if (this->_base->r_child != NULL && this->_base->r_child != this->_end && this->_keyc(it->first, this->_base->_content.first) == false){
-            //         if (this->_keyc(this->_base->_content.first, it->first) == false){
-            //             n* ret = this->_base;
-            //             this->_base = current;
-            //             std::cout << "test2" << ret->_content.first << std::endl;
-            //             return ret;
-            //         }
-            //         this->_base = this->_base->r_child;
-            //     }
-            //     else
-            //         break;
-            // }
-            // this->_base = current;
-            // return this->_end;
         }
         void gets_end(n* current, n* wit){
             n* temp =  wit;
@@ -655,3 +612,4 @@ void swap (map<Key, T, Compare, Alloc>& one, map<Key, T, Compare, Alloc>& two) {
 }
 
 };
+#endif

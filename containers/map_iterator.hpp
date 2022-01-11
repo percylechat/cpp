@@ -7,6 +7,8 @@ namespace ft {
 
 template<typename T, typename n>
 class map_iterator{
+    public:
+        // typedef Iterator iterator_type;
         typedef T         value_type;
         typedef std::ptrdiff_t difference_type;
         typedef T* pointer;
@@ -31,6 +33,9 @@ class map_iterator{
         operator map_iterator<value_type const, n>() const {
             return map_iterator<value_type const, n>(this->_ite);
         }
+        // iterator_type base(void) const {
+        //     return _ite;
+        // }
         reference operator*() const{
             return this->_ite->_content;
         }
@@ -47,10 +52,20 @@ class map_iterator{
                 this->_ite = current;
             }
             else{
-                n temp = current;
-                current = current->mom;
-                while (temp->_content.first > current->_content.first)
-                    current = current->mom;
+            //     node_pointer temp = _node;
+			// _node = _node->parent;
+			// while (_node->left != temp) {
+			// 	temp = _node;
+			// 	_node = _node->parent
+            n temp = current;
+            current = current->mom;
+            while (current->l_child != temp)
+                { temp = current;
+                current = current->mom;}
+                // n temp = current;
+                // current = current->mom;
+                // while (temp->_content.first > current->_content.first)
+                //     current = current->mom;
                 this->_ite = current;
             }
             return *this;
@@ -66,10 +81,15 @@ class map_iterator{
                 this->_ite = current;
             }
             else{
-                n temp1 = current;
-                current = current->mom;
-                while (temp1->_content.first > current->_content.first)
-                    current = current->mom;
+                            n temp1 = current;
+            current = current->mom;
+            while (current->l_child != temp1)
+                { temp1 = current;
+                current = current->mom;}
+                // n temp1 = current;
+                // current = current->mom;
+                // while (temp1->_content.first > current->_content.first)
+                //     current = current->mom;
                 this->_ite = current;
             }
             return temp;

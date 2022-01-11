@@ -2,7 +2,7 @@
 #define REVERSE_ITERATOR
 
 #include <memory> // allocator and ptrdiff_t
-#include "vector_iterator.hpp"
+// #include "vector_iterator.hpp"
 #include "iterator.hpp"
 
 namespace ft {
@@ -24,13 +24,13 @@ class reverse_iterator{
     typedef typename iterator_traits<Iterator>::reference reference;
     // typedef typename std::random_access_iterator_tag iterator_category;
 //    pointer _ite;
-    // private:
+    private:
 
         // typedef T         value_type;
         // typedef std::ptrdiff_t difference_type;
         // typedef T* pointer;
         // typedef T& reference;
-        pointer _ite;
+        iterator_type _ite;
     public:
 ////////////////////////////////////////////////////////////////////////
 // CONSTRUCTEURS / DESTRUCTEUR
@@ -38,18 +38,23 @@ class reverse_iterator{
         reverse_iterator(){
             this->_ite = NULL;
         }
-        reverse_iterator(pointer p){
+        reverse_iterator(iterator_type p){
             this->_ite = p;
         }
-        explicit reverse_iterator (iterator_type it){
-            this->_ite = it.get_ptr();
-        }
+        // explicit reverse_iterator (iterator_type it){
+        //     this->_ite = it.base();
+        // }
+
+	// reverse_iterator() : _pointer(NULL) {}
+	// reverse_iterator(iterator_type ptr) : _pointer(ptr) {}
+	// template<typename an_iterator>
+	// reverse_iterator(const reverse_iterator<an_iterator> & src) : _pointer(src.base()) {}
         template <typename ITE>
         reverse_iterator(const reverse_iterator<ITE>& one){
-            this->_ite = one.get_ptr();
+            this->_ite = one.base();
         }
         reverse_iterator& operator=(const reverse_iterator & one) {
-            this->_ite = one.get_ptr();
+            this->_ite = one.base();
             return *this;
         }
 	    ~reverse_iterator() {}
@@ -76,7 +81,7 @@ class reverse_iterator{
 		    it--;
 		    return *it;
         }
-        pointer operator->(){
+        pointer operator->()const{
             return &(operator*());
         }
         value_type& operator[](int index) {
