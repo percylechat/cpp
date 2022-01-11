@@ -55,6 +55,27 @@ template<class T> struct enable_if<true, T> {
 typedef T type;
 };
 
+// template <class T> struct is_integral{
+// 	const static bool value_type = false;
+// 	// type	either true_type or false_type
+// };
+
+// template<> struct is_integral<bool> { const static bool value_type = true; };
+// template<> struct is_integral<char> { const static bool value_type = true; };
+// // template<> struct is_integral<char16_t> { static const bool value_type = true; };
+// // template<> struct is_integral<char32_t> { static const bool value_type = true; };
+// template<> struct is_integral<wchar_t> {const static bool value_type = true; };
+// template<> struct is_integral<signed char> { const static bool value_type = true; };
+// template<> struct is_integral<short int> { const static bool value_type = true; };
+// template<> struct is_integral<int> { const static bool value_type = true; };
+// template<> struct is_integral<long int> { const static bool value_type = true; };
+// template<> struct is_integral<long long int> { const static bool value_type = true; };
+// template<> struct is_integral<unsigned char> { const static bool value_type = true; };
+// template<> struct is_integral<unsigned short int> { const static bool value_type = true; };
+// template<> struct is_integral<unsigned int> { const static bool value_type = true; };
+// template<> struct is_integral<unsigned long int> { const static bool value_type = true; };
+// template<> struct is_integral<unsigned long long int> { const static bool value_type = true; };
+
 template <class T> struct is_integral{
 	static const bool value_type = false;
 	// type	either true_type or false_type

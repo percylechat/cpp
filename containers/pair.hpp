@@ -7,11 +7,11 @@ struct pair{
     first_type first;
     second_type second;
 
-    pair() {}
+    pair(): first(0), second(0){}
     template<class U, class V> pair (const pair<U,V>& pr): first(pr.first), second(pr.second) {}
     pair (const first_type& a, const second_type& b): first(a), second(b){}
     pair& operator= (const pair& pr){
-        this->first = pr.first;
+        first = pr.first;
         this->second = pr.second;
         return *this;
     }

@@ -5,19 +5,19 @@
 
 namespace ft {
 
-template<typename T>
+template<typename T, typename n>
 class map_iterator{
         typedef T         value_type;
         typedef std::ptrdiff_t difference_type;
         typedef T* pointer;
         typedef T& reference;
     protected:
-        pointer _ite;
+        n _ite;
     public:
         map_iterator(){
             this->_ite = NULL;
         }
-        map_iterator(pointer p){
+        map_iterator(n p){
             this->_ite = p;
         }
         map_iterator(map_iterator const & one){
@@ -28,23 +28,88 @@ class map_iterator{
             return *this;
         }
 	    ~map_iterator() {}
-        operator map_iterator<value_type const>() const {
-            return map_iterator<value_type const>(this->_ite);
+        operator map_iterator<value_type const, n>() const {
+            return map_iterator<value_type const, n>(this->_ite);
         }
-
-        reference operator*(){
-            return *this->_ite;
+        reference operator*() const{
+            return this->_ite->_content;
         }
-        value_type* operator->(){
-            return this->_ite;
+        pointer operator->() const{
+            return &(operator*());
         }
-
         map_iterator &operator++(){
-            
-            // this->_ite++;
+            // std::cout << "isok" << std::endl;
+            n current = this->_ite;
+            if (current->r_child != NULL){
+                current = current->r_child;
+                while (current->l_child != NULL)
+                    current = current->l_child;
+                this->_ite = current;
+            }
+            else{
+                n temp = current;
+                current = current->mom;
+                while (temp->_content.first > current->_content.first)
+                    current = current->mom;
+                this->_ite = current;
+            }
             return *this;
         }
-
+        map_iterator operator++(int){
+            n temp = this->_ite;
+                        // std::cout << "isok" << std::endl;
+            n current = this->_ite;
+            if (current->r_child != NULL){
+                current = current->r_child;
+                while (current->l_child != NULL)
+                    current = current->l_child;
+                this->_ite = current;
+            }
+            else{
+                n temp1 = current;
+                current = current->mom;
+                while (temp1->_content.first > current->_content.first)
+                    current = current->mom;
+                this->_ite = current;
+            }
+            return temp;
+        }
+        map_iterator &operator--(){
+            n current = this->_ite;
+            if (current->l_child != NULL){
+                current = current->l_child;
+                while (current->r_child != NULL)
+                    current = current->r_child;
+                this->_ite = current;
+            }
+            else{
+                // n temp = current;
+                // if (current->mom)
+                    current = current->mom;
+                // while (temp->_content < current->_content)
+                //     current = current->mom;
+                this->_ite = current;
+            }
+            return *this;
+        }
+        map_iterator operator--(int){
+            n temp = this->_ite;
+            n current = this->_ite;
+            if (current->l_child != NULL){
+                current = current->l_child;
+                while (current->r_child != NULL)
+                    current = current->r_child;
+                this->_ite = current;
+            }
+            else{
+                // n temp1 = current;
+                current = current->mom;
+                // while (temp1->_content < current->_content)
+                //     current = current->mom;
+                this->_ite = current;
+            }
+            return temp;
+        }
         bool operator!=(const map_iterator bis) const{
             if (this->_ite != bis._ite)
                 return true;
@@ -55,28 +120,16 @@ class map_iterator{
                 return true;
             return false;
         }
-        bool operator>(const map_iterator bis) const{
-            if (this->_ite > bis._ite)
-                return true;
-            return false;
-        }
-        bool operator>=(const map_iterator bis) const{
-            if (this->_ite >= bis._ite)
-                return true;
-            return false;
-        }
-        bool operator<=(const map_iterator bis) const{
-            if (this->_ite <= bis._ite)
-                return true;
-            return false;
-        }
-        bool operator<(const map_iterator bis) const{
-            if (this->_ite < bis._ite)
-                return true;
-            return false;
-        }
-
 };
+
+template<typename it1, typename it2>
+bool operator==(const map_iterator<it1, it2>& one, const map_iterator<it1, it2>& two) {
+    return one->_content == two->_content();
+}
+template<typename it1, typename it2>
+bool operator!=(const map_iterator<it1, it2>& one, const map_iterator<it1, it2>& two) {
+    return one->_content() != two->_content();
+}
 
 
 };

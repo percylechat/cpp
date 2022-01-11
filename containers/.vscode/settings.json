@@ -42,6 +42,7 @@
         "typeinfo": "cpp",
         "iterator": "cpp",
         "list": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "functional": "cpp"
     }
 }
