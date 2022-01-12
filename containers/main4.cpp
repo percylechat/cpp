@@ -381,37 +381,6 @@ void go_map(void){
 	}
 }
 
-
-//////////////////
-//BUSSIERE
-//////////////////
-void buss(void)
-{
-	ft::vector<int> one;
-	one.push_back(43);
-	one.push_back(42);
-	one.push_back(99);
-	ft::vector<int>::iterator a = one.begin();
-	ft::vector<int>::iterator b = one.end();
-	a++;
-	while (a != b){
-		std::cout << *a << std::endl;
-		a++;
-	}
-	ft::vector<int> two(2, 66);
-	ft::vector<int> three(2, 33);
-	one.insert(one.begin(), two.begin(), two.end());
-	ft::vector<int>::iterator c = one.begin();
-	c += 1;
-	one.insert(c, three.begin(), three.end());
-	a = one.begin();
-	b = one.end();
-	while (a != b){
-		std::cout << *a << std::endl;
-		a++;
-	}
-}
-
 int main(int argc, char *argv[]){
 	if (argc != 2){
 		std::cout << "USE: ./container container_to_test" << std::endl;
@@ -423,8 +392,6 @@ int main(int argc, char *argv[]){
 		go_map();
 	else if (!strcmp(argv[1], "vector"))
 		go_vector();
-	else if (!strcmp(argv[1], "buss"))
-		buss();
 	else
 		std::cout << "USE: ./container container_to_test" << std::endl;
 	return 1;
