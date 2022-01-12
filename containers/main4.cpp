@@ -272,7 +272,7 @@ void go_map(void){
 	std::cout << "size: " << mymap.size() << std::endl;
 	std::cout << "is empty: " << mymap.empty() << std::endl;
 	std::cout << "max_size: " << mymap.max_size() << std::endl;
-	mymap.erase();
+	mymap.clear();
 	std::cout << "\tSIZE" << std::endl;
 	std::cout << "size: " << mymap.size() << std::endl;
 	std::cout << "is empty: " << mymap.empty() << std::endl;
@@ -283,6 +283,14 @@ void go_map(void){
 	std::cout << "size: " << map1.size() << std::endl;
 	std::cout << "is empty: " << map1.empty() << std::endl;
 	std::cout << "max_size: " << map1.max_size() << std::endl;
+	std::cout << std::endl;
+	a = map1.begin();
+	b = map1.end();
+	while (a != b){
+		std::cout << a->first << " " << a->second << std::endl;
+		a++;
+	}
+	// map1.erase()
 }
 
 
