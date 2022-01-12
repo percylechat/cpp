@@ -171,6 +171,14 @@ void go_vector(void){
 	std::cout << (vector_int >= vector_int_quat) << std::endl;
 	std::cout << (vector_int <= vector_int_tre) << std::endl;
 	std::cout << (vector_int != vector_int_quat) << std::endl;
+
+	std::cout << "\t\tREVERSE ITERATOR" << std::endl;
+	std::vector<int>::reverse_iterator it = vector_int.rbegin();
+	std::vector<int>::reverse_iterator itt = vector_int.rend();
+	while (it != itt){
+		std::cout << *it << std::endl;
+		it++;
+	}
 }
 
 void go_stack(void){
@@ -240,7 +248,11 @@ void go_map(void){
 	std::cout << ret->first << " " << ret->second << std::endl;
 	// test value not in map
 	ret = map1.find(150);
-	std::cout << ret->first << " " << ret->second << std::endl;
+	// CHANGE with ft version because printing end iterator returns random stuff
+	if (ret == map1.end())
+		std::cout << "Returned end iterator" << std::endl;
+	else
+		std::cout << ret->first << " " << ret->second << std::endl;
 	// test count with value in map
 	std::cout << map1.count(55) << std::endl;
 	// test count with value not in map
@@ -357,6 +369,14 @@ void go_map(void){
 	std::cout << "is empty: " << map2.empty() << std::endl;
 	std::cout << "max_size: " << map2.max_size() << std::endl;
 	std::cout << std::endl;
+
+	std::cout << "\t\tREVERSE ITERATOR" << std::endl;
+	std::map<int, std::string>::reverse_iterator it(map2.rbegin());
+	std::map<int, std::string>::reverse_iterator itt(map2.rend());
+	while (it != itt){
+		std::cout << it->first << std::endl;
+		it++;
+	}
 }
 
 

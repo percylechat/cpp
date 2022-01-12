@@ -177,6 +177,14 @@ void go_vector(void){
 	std::cout << (vector_int >= vector_int_quat) << std::endl;
 	std::cout << (vector_int <= vector_int_tre) << std::endl;
 	std::cout << (vector_int != vector_int_quat) << std::endl;
+
+	std::cout << "\t\tREVERSE ITERATOR" << std::endl;
+	ft::vector<int>::reverse_iterator it = vector_int.rbegin();
+	ft::vector<int>::reverse_iterator itt = vector_int.rend();
+	while (it != itt){
+		std::cout << *it << std::endl;
+		it++;
+	}
 }
 
 void go_stack(void){
@@ -363,6 +371,14 @@ void go_map(void){
 	std::cout << "is empty: " << map2.empty() << std::endl;
 	std::cout << "max_size: " << map2.max_size() << std::endl;
 	std::cout << std::endl;
+
+	std::cout << "\t\tREVERSE ITERATOR" << std::endl;
+	ft::map<int, std::string>::reverse_iterator it(map2.rbegin());
+	ft::map<int, std::string>::reverse_iterator itt(map2.rend());
+	while (it != itt){
+		std::cout << it->first << std::endl;
+		it++;
+	}
 }
 
 
