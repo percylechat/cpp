@@ -1,17 +1,11 @@
 #include <iostream>
 #include <string>
-#include "map.hpp"
-#include "vector.hpp"
-#include "stack.hpp"
+#include <map>
+#include <vector>
+#include <stack>
 #include <cstring>
 
-// #if STD
-// 	#define NS std
-// #else
-// 	#define NS ft
-// #endif
-
-void go_size(ft::vector<int> a){
+void go_size(std::vector<int> a){
 	// test size, empty, cap et max_size
 	std::cout << "\tSIZE" << std::endl;
 	std::cout << "size: " << a.size() << std::endl;
@@ -23,7 +17,7 @@ void go_size(ft::vector<int> a){
 void go_vector(void){
 	std::cout << "\t\tINSERT" << std::endl;
 	// push_back et crea vecteur vide
-	ft::vector<int> vector_int;
+	std::vector<int> vector_int;
 	go_size(vector_int);
 	vector_int.push_back(42);
 	vector_int.push_back(2);
@@ -34,12 +28,12 @@ void go_vector(void){
 	// insert avec pos + count + valeur
 	vector_int.insert(vector_int.begin(), 3, 193);
 	// crea vecteur plein
-	ft::vector<int> vector_int_bis(4, 177);
+	std::vector<int> vector_int_bis(4, 177);
 	// insert de vecteur a pos
 	vector_int.insert(vector_int.begin(), vector_int_bis.begin(), vector_int_bis.end());
 	// test crea iterateurs + circulation
-	ft::vector<int>::iterator a = vector_int.begin();
-	ft::vector<int>::iterator b = vector_int.end();
+	std::vector<int>::iterator a = vector_int.begin();
+	std::vector<int>::iterator b = vector_int.end();
 	while (a != b){
 		std::cout << *a << std::endl;
 		a++;
@@ -151,7 +145,7 @@ void go_vector(void){
 
 	std::cout << "\t\tCONSTR" << std::endl;
 	// test constr copie
-	ft::vector<int> vector_int_tre(vector_int);
+	std::vector<int> vector_int_tre(vector_int);
 	a = vector_int_tre.begin();
 	b = vector_int_tre.end();
 	while (a != b){
@@ -160,7 +154,7 @@ void go_vector(void){
 	}
 	std::cout << std::endl;
 	// test const iterateurs
-	ft::vector<int>vector_int_quat(vector_int.begin(), vector_int.end());
+	std::vector<int>vector_int_quat(vector_int.begin(), vector_int.end());
 	a = vector_int_quat.begin();
 	b = vector_int_quat.end();
 	while (a != b){
@@ -182,7 +176,7 @@ void go_vector(void){
 void go_stack(void){
 std::cout << "\t\tSTACK" << std::endl;
 // pop, top et push
-	ft::stack<int> mystack;
+	std::stack<int> mystack;
 	for (int i=0; i<5; ++i) mystack.push(i);
 	std::cout << "Popping out elements...";
 	while (!mystack.empty()){
@@ -195,28 +189,28 @@ std::cout << "\t\tSTACK" << std::endl;
 void go_map(void){
 	std::cout << "\t\tINSERT" << std::endl;
 	//crea map vide
-	ft::map<int, std::string> map1;
-	ft::map<int, std::string> map2;
+	std::map<int, std::string> map1;
+	std::map<int, std::string> map2;
 	// test size, empty, max_size
 	std::cout << "\tSIZE" << std::endl;
 	std::cout << "size: " << map1.size() << std::endl;
 	std::cout << "is empty: " << map1.empty() << std::endl;
 	std::cout << "max_size: " << map1.max_size() << std::endl;
 	// insert valeur
-	map1.insert(ft::pair<int, std::string>(43, "hello"));
-	map1.insert(ft::pair<int, std::string>(12, "bebe"));
-	map1.insert(ft::pair<int, std::string>(25, "chat"));
+	map1.insert(std::pair<int, std::string>(43, "hello"));
+	map1.insert(std::pair<int, std::string>(12, "bebe"));
+	map1.insert(std::pair<int, std::string>(25, "chat"));
 	// insert valeur + iterateur suggere
-	map1.insert(map1.begin(), ft::pair<int, std::string>(55, "Percy"));
-	map1.insert(ft::pair<int, std::string>(43, "lol"));
+	map1.insert(map1.begin(), std::pair<int, std::string>(55, "Percy"));
+	map1.insert(std::pair<int, std::string>(43, "lol"));
 	// insert avec ope
 	map1[58]="kikou";
 
-	map2.insert(ft::pair<int, std::string>(44, "new"));
-	map2.insert(ft::pair<int, std::string>(99, "map"));
+	map2.insert(std::pair<int, std::string>(44, "new"));
+	map2.insert(std::pair<int, std::string>(99, "map"));
 	// insert avec iterateurs
-	ft::map<int, std::string>::iterator a = map1.begin();
-	ft::map<int, std::string>::iterator b = map1.end();
+	std::map<int, std::string>::iterator a = map1.begin();
+	std::map<int, std::string>::iterator b = map1.end();
 	while (a != b){
 		std::cout << a->first << " " << a->second << std::endl;
 		a++;
@@ -242,7 +236,7 @@ void go_map(void){
 
 	std::cout << "\t\tFIND & COUNT" << std::endl;
 	// test value in map
-	ft::map<int, std::string>::iterator ret = map1.find(55);
+	std::map<int, std::string>::iterator ret = map1.find(55);
 	std::cout << ret->first << " " << ret->second << std::endl;
 	// test value not in map
 	ret = map1.find(150);
@@ -254,8 +248,8 @@ void go_map(void){
 
 	std::cout << "\t\tBOUNDS" << std::endl;
 	// check http://www.cplusplus.com/reference/map/map/upper_bound/
-	ft::map<char,int> mymap;
-	ft::map<char,int>::iterator itlow,itup;
+	std::map<char,int> mymap;
+	std::map<char,int>::iterator itlow,itup;
 	mymap['a']=20;
 	mymap['b']=40;
 	mymap['c']=60;
@@ -264,7 +258,7 @@ void go_map(void){
 	itlow=mymap.lower_bound ('b');  // itlow points to b
 	itup=mymap.upper_bound ('d');   // itup points to e (not d!)
 	mymap.erase(itlow,itup);        // erases [itlow,itup)
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 	std::cout << it->first << " => " << it->second << '\n';
 
 	std::cout << "\t\tCLEAR\n" << std::endl;
@@ -371,21 +365,21 @@ void go_map(void){
 //////////////////
 void buss(void)
 {
-	ft::vector<int> one;
+	std::vector<int> one;
 	one.push_back(43);
 	one.push_back(42);
 	one.push_back(99);
-	ft::vector<int>::iterator a = one.begin();
-	ft::vector<int>::iterator b = one.end();
+	std::vector<int>::iterator a = one.begin();
+	std::vector<int>::iterator b = one.end();
 	a++;
 	while (a != b){
 		std::cout << *a << std::endl;
 		a++;
 	}
-	ft::vector<int> two(2, 66);
-	ft::vector<int> three(2, 33);
+	std::vector<int> two(2, 66);
+	std::vector<int> three(2, 33);
 	one.insert(one.begin(), two.begin(), two.end());
-	ft::vector<int>::iterator c = one.begin();
+	std::vector<int>::iterator c = one.begin();
 	c += 1;
 	one.insert(c, three.begin(), three.end());
 	a = one.begin();
@@ -395,6 +389,7 @@ void buss(void)
 		a++;
 	}
 }
+
 
 int main(int argc, char *argv[]){
 	if (argc != 2){
