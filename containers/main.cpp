@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <deque>
-// #if 1 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
 	namespace ft = std;
-// #else
-	// #include <map.hpp>
-	// #include <stack.hpp>
-	// #include <vector.hpp>
-// #endif
+#else
+	#include <map.hpp>
+	#include <stack.hpp>
+	#include <vector.hpp>
+#endif
 
 #include <stdlib.h>
 
@@ -112,6 +112,6 @@ int main(int argc, char** argv) {
 		std::cout << *it;
 	}
 	// std::cout << std::endl;
-	std::cout << "is ok" << std::endl;
+	std::cout << " is ok" << std::endl;
 	return (0);
 }

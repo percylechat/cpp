@@ -4,11 +4,11 @@ CXX = clang++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-MAIN = ./main.cpp 
+MAIN = ./main4.cpp 
 
 MAIN_OBJS = $(MAIN:.cpp=.o)
 
-HEADERS = ./stack.hpp
+HEADERS = ./iterator.hpp ./map_iterator.hpp ./vector_iterator.hpp ./reverse_iterator.hpp ./pair.hpp ./vector.hpp ./map.hpp ./stack.hpp
 
 RM = rm -rf 
 

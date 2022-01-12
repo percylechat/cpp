@@ -1,8 +1,398 @@
 #include <iostream>
 #include <string>
 #include "map.hpp"
+#include "vector.hpp"
+#include "stack.hpp"
+#include <cstring>
 
-int main(){
-    ft::map<int, std::string> test;
-    test.insert(ft::pair<int, std::string>(5, "bebe"));
+// #if STD
+// 	#define NS std
+// #else
+// 	#define NS ft
+// #endif
+
+void go_size(ft::vector<int> a){
+	// test size, empty, cap et max_size
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << a.size() << std::endl;
+	std::cout << "is empty: " << a.empty() << std::endl;
+	std::cout << "capacity: " << a.capacity() << std::endl;
+	std::cout << "max_size: " << a.max_size() << std::endl;
+}
+
+void go_vector(void){
+	std::cout << "\t\tINSERT" << std::endl;
+	// push_back et crea vecteur vide
+	ft::vector<int> vector_int;
+	go_size(vector_int);
+	vector_int.push_back(42);
+	vector_int.push_back(2);
+	vector_int.push_back(4);
+	vector_int.push_back(99);
+	// insert avec pos + valeur
+	vector_int.insert((vector_int.begin() + 2), 150);
+	// insert avec pos + count + valeur
+	vector_int.insert(vector_int.begin(), 3, 193);
+	// crea vecteur plein
+	ft::vector<int> vector_int_bis(4, 177);
+	// insert de vecteur a pos
+	vector_int.insert(vector_int.begin(), vector_int_bis.begin(), vector_int_bis.end());
+	// test crea iterateurs + circulation
+	ft::vector<int>::iterator a = vector_int.begin();
+	ft::vector<int>::iterator b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	go_size(vector_int);
+
+	std::cout << "\t\tRESERVE & RESIZE" << std::endl;
+	// test reserve
+	// normal que plus grand, choix poir optimiser gestion de memoire.
+	vector_int.reserve(50);
+	go_size(vector_int);
+	// test resize
+	// plus grand que size actuel
+	vector_int.resize(15, 999);
+	go_size(vector_int);
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	// plus petit que size actuel
+	vector_int.resize(10);
+	go_size(vector_int);
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+
+	std::cout << "\t\tACCESS" << std::endl;
+	// test front
+	std::cout << vector_int.front() << std::endl;
+	// test back
+	std::cout << vector_int.back() << std::endl;
+	// test []
+	std::cout << vector_int[8] << std::endl;
+	// test at
+	std::cout << vector_int.at(7) << std::endl;
+
+	std::cout << "\t\tSWAP & ASSIGN" << std::endl;
+	// test swap
+	vector_int.swap(vector_int_bis);
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	go_size(vector_int);
+	a = vector_int_bis.begin();
+	b = vector_int_bis.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	go_size(vector_int_bis);
+	// test assign par vecteur
+	vector_int.assign(vector_int_bis.begin(), vector_int_bis.end());
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	std::cout << std::endl;
+	// test assign avec size et content
+	vector_int_bis.assign(7, 300);
+	a = vector_int_bis.begin();
+	b = vector_int_bis.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+
+	std::cout << "\t\tERASE & POP BACK" << std::endl;
+	// test pop_back
+	vector_int.pop_back();
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	std::cout << std::endl;
+	// test erase avec un iterateur de pos
+	vector_int.erase(vector_int.begin());
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	std::cout << std::endl;
+	// test avec un range d iterateurs
+	vector_int.erase(vector_int.begin() + 2, vector_int.begin() + 5);
+	a = vector_int.begin();
+	b = vector_int.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+
+	std::cout << "\t\tCLEAR" << std::endl;
+	go_size(vector_int_bis);
+	vector_int_bis.clear();
+	go_size(vector_int_bis);
+
+	std::cout << "\t\tCONSTR" << std::endl;
+	// test constr copie
+	ft::vector<int> vector_int_tre(vector_int);
+	a = vector_int_tre.begin();
+	b = vector_int_tre.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	std::cout << std::endl;
+	// test const iterateurs
+	ft::vector<int>vector_int_quat(vector_int.begin(), vector_int.end());
+	a = vector_int_quat.begin();
+	b = vector_int_quat.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+
+	std::cout << "\t\tCOMP" << std::endl;
+	vector_int_tre.push_back(66);
+	vector_int_quat.pop_back();
+	std::cout << (vector_int > vector_int_quat) << std::endl;
+	std::cout << (vector_int < vector_int_tre) << std::endl;
+	std::cout << (vector_int == vector_int_quat) << std::endl;
+	std::cout << (vector_int >= vector_int_quat) << std::endl;
+	std::cout << (vector_int <= vector_int_tre) << std::endl;
+	std::cout << (vector_int != vector_int_quat) << std::endl;
+}
+
+void go_stack(void){
+std::cout << "\t\tSTACK" << std::endl;
+// pop, top et push
+	ft::stack<int> mystack;
+	for (int i=0; i<5; ++i) mystack.push(i);
+	std::cout << "Popping out elements...";
+	while (!mystack.empty()){
+		std::cout << ' ' << mystack.top() << mystack.size() << std::endl;
+		mystack.pop();
+	}
+	std::cout << '\n';
+}
+
+void go_map(void){
+	std::cout << "\t\tINSERT" << std::endl;
+	//crea map vide
+	ft::map<int, std::string> map1;
+	ft::map<int, std::string> map2;
+	// test size, empty, max_size
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << map1.size() << std::endl;
+	std::cout << "is empty: " << map1.empty() << std::endl;
+	std::cout << "max_size: " << map1.max_size() << std::endl;
+	// insert valeur
+	map1.insert(ft::pair<int, std::string>(43, "hello"));
+	map1.insert(ft::pair<int, std::string>(12, "bebe"));
+	map1.insert(ft::pair<int, std::string>(25, "chat"));
+	// insert valeur + iterateur suggere
+	map1.insert(map1.begin(), ft::pair<int, std::string>(55, "Percy"));
+	map1.insert(ft::pair<int, std::string>(43, "lol"));
+	// insert avec ope
+	map1[58]="kikou";
+
+	map2.insert(ft::pair<int, std::string>(44, "new"));
+	map2.insert(ft::pair<int, std::string>(99, "map"));
+	// insert avec iterateurs
+	ft::map<int, std::string>::iterator a = map1.begin();
+	ft::map<int, std::string>::iterator b = map1.end();
+	while (a != b){
+		std::cout << a->first << " " << a->second << std::endl;
+		a++;
+	}
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << map1.size() << std::endl;
+	std::cout << "is empty: " << map1.empty() << std::endl;
+	std::cout << "max_size: " << map1.max_size() << std::endl;
+	map1.insert(map2.begin(), map2.end());
+	std::cout << std::endl;
+	a = map1.begin();
+	b = map1.end();
+	while (a != b){
+		std::cout << a->first << " " << a->second << std::endl;
+		a++;
+	}
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << map1.size() << std::endl;
+	std::cout << "is empty: " << map1.empty() << std::endl;
+	std::cout << "max_size: " << map1.max_size() << std::endl;
+
+	//k;,jjjjjjjjjjjjjj << un message de mon chat
+
+	std::cout << "\t\tFIND & COUNT" << std::endl;
+	// test value in map
+	ft::map<int, std::string>::iterator ret = map1.find(55);
+	std::cout << ret->first << " " << ret->second << std::endl;
+	// test value not in map
+	ret = map1.find(150);
+	std::cout << ret->first << " " << ret->second << std::endl;
+	// test count with value in map
+	std::cout << map1.count(55) << std::endl;
+	// test count with value not in map
+	std::cout << map1.count(150) << std::endl;
+
+	std::cout << "\t\tFIND & COUNT" << std::endl;
+
+	// std::cout << "\t\tRESERVE & RESIZE" << std::endl;
+	// // test reserve
+	// // normal que plus grand, choix poir optimiser gestion de memoire.
+	// vector_int.reserve(50);
+	// go_size(vector_int);
+	// // test resize
+	// // plus grand que size actuel
+	// vector_int.resize(15, 999);
+	// go_size(vector_int);
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// // plus petit que size actuel
+	// vector_int.resize(10);
+	// go_size(vector_int);
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << "\t\tACCESS" << std::endl;
+	// // test front
+	// std::cout << vector_int.front() << std::endl;
+	// // test back
+	// std::cout << vector_int.back() << std::endl;
+	// // test []
+	// std::cout << vector_int[8] << std::endl;
+	// // test at
+	// std::cout << vector_int.at(7) << std::endl;
+	// std::cout << "\t\tSWAP & ASSIGN" << std::endl;
+	// // test swap
+	// vector_int.swap(vector_int_bis);
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// go_size(vector_int);
+	// a = vector_int_bis.begin();
+	// b = vector_int_bis.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// go_size(vector_int_bis);
+	// // test assign par vecteur
+	// vector_int.assign(vector_int_bis.begin(), vector_int_bis.end());
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << std::endl;
+	// // test assign avec size et content
+	// vector_int_bis.assign(7, 300);
+	// a = vector_int_bis.begin();
+	// b = vector_int_bis.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << "\t\tERASE & POP BACK" << std::endl;
+	// // test pop_back
+	// vector_int.pop_back();
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << std::endl;
+	// // test erase avec un iterateur de pos
+	// vector_int.erase(vector_int.begin());
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << std::endl;
+	// // test avec un range d iterateurs
+	// vector_int.erase(vector_int.begin() + 2, vector_int.begin() + 5);
+	// a = vector_int.begin();
+	// b = vector_int.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << "\t\tCLEAR" << std::endl;
+	// go_size(vector_int_bis);
+	// vector_int_bis.clear();
+	// go_size(vector_int_bis);
+	// std::cout << "\t\tCONSTR" << std::endl;
+	// // test constr copie
+	// ft::vector<int> vector_int_tre(vector_int);
+	// a = vector_int_tre.begin();
+	// b = vector_int_tre.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << std::endl;
+	// // test const iterateurs
+	// ft::vector<int>vector_int_quat(vector_int.begin(), vector_int.end());
+	// a = vector_int_quat.begin();
+	// b = vector_int_quat.end();
+	// while (a != b){
+	// 	std::cout << *a << std::endl;
+	// 	a++;
+	// }
+	// std::cout << "\t\tCOMP" << std::endl;
+	// vector_int_tre.push_back(66);
+	// vector_int_quat.pop_back();
+	// std::cout << (vector_int > vector_int_quat) << std::endl;
+	// std::cout << (vector_int < vector_int_tre) << std::endl;
+	// std::cout << (vector_int == vector_int_quat) << std::endl;
+	// std::cout << (vector_int >= vector_int_quat) << std::endl;
+	// std::cout << (vector_int <= vector_int_tre) << std::endl;
+	// std::cout << (vector_int != vector_int_quat) << std::endl;
+}
+
+int main(int argc, char *argv[]){
+	if (argc != 2){
+		std::cout << "USE: ./container container_to_test" << std::endl;
+		return 0;
+	}
+	if (!strcmp(argv[1], "stack"))
+		go_stack();
+	else if (!strcmp(argv[1], "map"))
+		go_map();
+	else if (!strcmp(argv[1], "vector"))
+		go_vector();
+	else
+		std::cout << "USE: ./container container_to_test" << std::endl;
+	return 1;
 }

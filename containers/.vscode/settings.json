@@ -43,6 +43,7 @@
         "iterator": "cpp",
         "list": "cpp",
         "set": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "cstring": "cpp"
     }
 }
