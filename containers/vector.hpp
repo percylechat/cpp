@@ -285,7 +285,7 @@ template < class T, class Alloc = std::allocator<T> > class vector{
             size_type l = 0;
 		    size_type count = 0;
             iterator start = this->begin();
-            iterator cp = first;
+            InputIterator cp = first;
 		    while (cp != last){
                 cp++;
                 count++;

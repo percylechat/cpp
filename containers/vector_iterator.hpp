@@ -79,10 +79,10 @@ template <class T> class vector_iterator{
             }
             return *this;
         }
-        vector_iterator operator+(difference_type nbr){
+        vector_iterator operator+(difference_type nbr)const{
             return this->_ite + nbr;
         }
-        vector_iterator operator-(difference_type nbr){
+        vector_iterator operator-(difference_type nbr)const{
             return this->_ite - nbr;
         }
         difference_type operator-(const vector_iterator & one) const{

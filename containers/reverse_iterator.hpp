@@ -126,19 +126,30 @@ class reverse_iterator{
             this->_ite += nbr;
             return *this;
         }
-        reverse_iterator operator+(difference_type nbr){
+
+
+// riend reverse_iterator<Iterator> operator+(difference_type n, const reverse_iterator& rhs) {return rhs._pointer - n;} //n + a
+// 	reverse_iterator<Iterator> operator+(difference_type n) const {return _pointer - n;} //a + n
+// 	reverse_iterator<Iterator> operator-(difference_type n) const {return _pointer + n;} //a - n
+// 	difference_type operator-(const reverse_iterator& rhs) const {return rhs._pointer - _pointer;} //a - b
+	// reverse_iterator<Iterator> & operator+=(difference_type n) {_pointer -= n; return *this;}
+	// reverse_iterator<Iterator> & operator-=(difference_type n) {_pointer += n; return *this;}
+
+
+        friend reverse_iterator<Iterator> operator+(difference_type nbr, const reverse_iterator& one){
+            return one._ite - nbr;
+        }
+        reverse_iterator<Iterator> operator+(difference_type nbr)const{
             return this->_ite - nbr;
         }
-        difference_type operator+(const reverse_iterator & one) const{
-            return this->_ite - one._ite;
-        }
-        friend reverse_iterator operator+(difference_type n, const reverse_iterator& one){
-            return one._ite - n;
-        }
-        friend reverse_iterator operator-(difference_type n, const reverse_iterator& one){
-            return one._ite + n;
-        }
-        reverse_iterator operator-(difference_type nbr) const{
+        // difference_type operator+(const reverse_iterator & one) const{
+        //     return this->_ite - one._ite;
+        // }
+        
+        // friend reverse_iterator operator-(difference_type n, const reverse_iterator& one){
+        //     return one._ite + n;
+        // }
+        reverse_iterator<Iterator> operator-(difference_type nbr) const{
             return this->_ite + nbr;
         }
         difference_type operator-(const reverse_iterator & one) const{
@@ -149,6 +160,13 @@ class reverse_iterator{
 ////////////////////////////////////////////////////////////////////////
 // COMPARE
 ////////////////////////////////////////////////////////////////////////
+        
+        	// bool operator==(const reverse_iterator& other) const {return _pointer == other._pointer;}
+	// bool operator!=(const reverse_iterator& other) const {return _pointer != other._pointer;}
+	// bool operator<(const reverse_iterator& other) const {return _pointer > other._pointer;}
+	// bool operator<=(const reverse_iterator& other) const {return _pointer >= other._pointer;}
+	// bool operator>(const reverse_iterator& other) const {return _pointer < other._pointer;}
+	// bool operator>=(const reverse_iterator& other) const {return _pointer <= other._pointer;}
         bool operator!=(const reverse_iterator bis) const{
             if (this->_ite != bis._ite)
                 return true;
@@ -160,26 +178,26 @@ class reverse_iterator{
             return false;
         }
         bool operator>(const reverse_iterator bis) const{
-            if (this->_ite > bis._ite)
-                return true;
-            return false;
-        }
-        bool operator>=(const reverse_iterator bis) const{
-            if (this->_ite >= bis._ite)
-                return true;
-            return false;
-        }
-        bool operator<=(const reverse_iterator bis) const{
-            if (this->_ite <= bis._ite)
-                return true;
-            return false;
-        }
-        bool operator<(const reverse_iterator bis) const{
             if (this->_ite < bis._ite)
                 return true;
             return false;
         }
-        pointer get_ptr(void) const {
+        bool operator>=(const reverse_iterator bis) const{
+            if (this->_ite <= bis._ite)
+                return true;
+            return false;
+        }
+        bool operator<=(const reverse_iterator bis) const{
+            if (this->_ite >= bis._ite)
+                return true;
+            return false;
+        }
+        bool operator<(const reverse_iterator bis) const{
+            if (this->_ite > bis._ite)
+                return true;
+            return false;
+        }
+        iterator_type get_ptr(void) const {
             return _ite;
         }
 };
