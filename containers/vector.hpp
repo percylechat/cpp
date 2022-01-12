@@ -399,7 +399,7 @@ template <class T, class Alloc>
 bool operator== (const vector<T, Alloc>& one, const vector<T, Alloc>& two) {
 	if (one.size() != two.size())
 		return false;
-	return equal(one.begin(), one.end(), two.begin());
+	return ft::equal(one.begin(), one.end(), two.begin());
 }
 template <class T, class Alloc>
 bool operator!= (const vector<T, Alloc>& one, const vector<T, Alloc>& two) {
@@ -407,7 +407,7 @@ bool operator!= (const vector<T, Alloc>& one, const vector<T, Alloc>& two) {
 }
 template <class T, class Alloc>
 bool operator< (const vector<T, Alloc>& one, const vector<T, Alloc>& two) {
-	return lexicographical_compare(one.begin(), one.end(), two.begin(), two.end());
+	return ft::lexicographical_compare(one.begin(), one.end(), two.begin(), two.end());
 }
 template <class T, class Alloc>
 bool operator<= (const vector<T, Alloc>& one, const vector<T, Alloc>& two) {

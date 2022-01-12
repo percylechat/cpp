@@ -548,7 +548,7 @@ template <class Key, class T, class Compare, class Alloc>
 bool operator== (const map<Key, T, Compare, Alloc>& one, const map<Key, T, Compare, Alloc>& two) {
 	if (one.size() != two.size())
 		return false;
-	return equal(one.begin(), one.end(), two.begin());
+	return ft::equal(one.begin(), one.end(), two.begin());
 }
 template <class Key, class T, class Compare, class Alloc>
 bool operator!= (const map<Key, T, Compare, Alloc>& one, const map<Key, T, Compare, Alloc>& two) {
@@ -556,7 +556,7 @@ bool operator!= (const map<Key, T, Compare, Alloc>& one, const map<Key, T, Compa
 }
 template <class Key, class T, class Compare, class Alloc>
 bool operator< (const map<Key, T, Compare, Alloc>& one, const map<Key, T, Compare, Alloc>& two) {
-	return lexicographical_compare(one.begin(), one.end(), two.begin(), two.end());
+	return ft::lexicographical_compare(one.begin(), one.end(), two.begin(), two.end());
 }
 template <class Key, class T, class Compare, class Alloc>
 bool operator<= (const map<Key, T, Compare, Alloc>& one, const map<Key, T, Compare, Alloc>& two) {

@@ -48,7 +48,7 @@ $(NPERF_STD) :	$(PERF_OBJS_STD)
 	${CXX} ${CXXFLAGS} -o ${NPERF_STD} ${PERF_OBJS_STD}
 
 clean   :
-	$(RM) $(MAIN_OBJS) ${MAIN_STD} $(NPERF) $(NPERF_STD) 
+	$(RM) $(MAIN_OBJS) ${MAIN_STD_OBJS} $(PERF_OBJS) $(PERF_OBJS_STD) 
 
 fclean  : clean
 	$(RM) $(NAME) $(NAME_STD) $(NPERF) $(NPERF_STD) 

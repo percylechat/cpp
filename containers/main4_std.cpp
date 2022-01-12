@@ -192,6 +192,21 @@ std::cout << "\t\tSTACK" << std::endl;
 		mystack.pop();
 	}
 	std::cout << '\n';
+
+	std::stack<int> mystack1;
+	std::stack<int> mystack2;
+	mystack1.push(100);
+	mystack2.push(5);
+	mystack2.push(6);
+	mystack2.push(87);
+	mystack2.push(70);
+	std::cout << "\t\tCOMP" << std::endl;
+	std::cout << (mystack1 == mystack2) << std::endl;
+	std::cout << (mystack1 >= mystack2) << std::endl;
+	std::cout << (mystack1 <= mystack2) << std::endl;
+	std::cout << (mystack1 != mystack2) << std::endl;
+	std::cout << (mystack1 < mystack2) << std::endl;
+	std::cout << (mystack1 > mystack2) << std::endl;
 }
 
 void go_map(void){
@@ -377,6 +392,15 @@ void go_map(void){
 		std::cout << it->first << std::endl;
 		it++;
 	}
+
+	std::cout << "\t\tCOMP" << std::endl;
+	std::cout << (map1 == map2) << std::endl;
+	std::cout << (map1 >= map2) << std::endl;
+	std::cout << (map1 <= map2) << std::endl;
+	std::cout << (map1 != map2) << std::endl;
+	std::cout << (map1 < map2) << std::endl;
+	std::cout << (map1 > map2) << std::endl;
+
 }
 
 int main(int argc, char *argv[]){
