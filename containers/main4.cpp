@@ -252,134 +252,70 @@ void go_map(void){
 	// test count with value not in map
 	std::cout << map1.count(150) << std::endl;
 
-	std::cout << "\t\tFIND & COUNT" << std::endl;
+	std::cout << "\t\tBOUNDS" << std::endl;
+	// check http://www.cplusplus.com/reference/map/map/upper_bound/
+	ft::map<char,int> mymap;
+	ft::map<char,int>::iterator itlow,itup;
+	mymap['a']=20;
+	mymap['b']=40;
+	mymap['c']=60;
+	mymap['d']=80;
+	mymap['e']=100;
+	itlow=mymap.lower_bound ('b');  // itlow points to b
+	itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+	mymap.erase(itlow,itup);        // erases [itlow,itup)
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	std::cout << it->first << " => " << it->second << '\n';
 
-	// std::cout << "\t\tRESERVE & RESIZE" << std::endl;
-	// // test reserve
-	// // normal que plus grand, choix poir optimiser gestion de memoire.
-	// vector_int.reserve(50);
-	// go_size(vector_int);
-	// // test resize
-	// // plus grand que size actuel
-	// vector_int.resize(15, 999);
-	// go_size(vector_int);
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// // plus petit que size actuel
-	// vector_int.resize(10);
-	// go_size(vector_int);
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << "\t\tACCESS" << std::endl;
-	// // test front
-	// std::cout << vector_int.front() << std::endl;
-	// // test back
-	// std::cout << vector_int.back() << std::endl;
-	// // test []
-	// std::cout << vector_int[8] << std::endl;
-	// // test at
-	// std::cout << vector_int.at(7) << std::endl;
-	// std::cout << "\t\tSWAP & ASSIGN" << std::endl;
-	// // test swap
-	// vector_int.swap(vector_int_bis);
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// go_size(vector_int);
-	// a = vector_int_bis.begin();
-	// b = vector_int_bis.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// go_size(vector_int_bis);
-	// // test assign par vecteur
-	// vector_int.assign(vector_int_bis.begin(), vector_int_bis.end());
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << std::endl;
-	// // test assign avec size et content
-	// vector_int_bis.assign(7, 300);
-	// a = vector_int_bis.begin();
-	// b = vector_int_bis.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << "\t\tERASE & POP BACK" << std::endl;
-	// // test pop_back
-	// vector_int.pop_back();
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << std::endl;
-	// // test erase avec un iterateur de pos
-	// vector_int.erase(vector_int.begin());
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << std::endl;
-	// // test avec un range d iterateurs
-	// vector_int.erase(vector_int.begin() + 2, vector_int.begin() + 5);
-	// a = vector_int.begin();
-	// b = vector_int.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << "\t\tCLEAR" << std::endl;
-	// go_size(vector_int_bis);
-	// vector_int_bis.clear();
-	// go_size(vector_int_bis);
-	// std::cout << "\t\tCONSTR" << std::endl;
-	// // test constr copie
-	// ft::vector<int> vector_int_tre(vector_int);
-	// a = vector_int_tre.begin();
-	// b = vector_int_tre.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << std::endl;
-	// // test const iterateurs
-	// ft::vector<int>vector_int_quat(vector_int.begin(), vector_int.end());
-	// a = vector_int_quat.begin();
-	// b = vector_int_quat.end();
-	// while (a != b){
-	// 	std::cout << *a << std::endl;
-	// 	a++;
-	// }
-	// std::cout << "\t\tCOMP" << std::endl;
-	// vector_int_tre.push_back(66);
-	// vector_int_quat.pop_back();
-	// std::cout << (vector_int > vector_int_quat) << std::endl;
-	// std::cout << (vector_int < vector_int_tre) << std::endl;
-	// std::cout << (vector_int == vector_int_quat) << std::endl;
-	// std::cout << (vector_int >= vector_int_quat) << std::endl;
-	// std::cout << (vector_int <= vector_int_tre) << std::endl;
-	// std::cout << (vector_int != vector_int_quat) << std::endl;
+	std::cout << "\t\tCLEAR" << std::endl;
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << mymap.size() << std::endl;
+	std::cout << "is empty: " << mymap.empty() << std::endl;
+	std::cout << "max_size: " << mymap.max_size() << std::endl;
+	mymap.erase();
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << mymap.size() << std::endl;
+	std::cout << "is empty: " << mymap.empty() << std::endl;
+	std::cout << "max_size: " << mymap.max_size() << std::endl;
+
+	std::cout << "\t\tERASE" << std::endl;
+	std::cout << "\tSIZE" << std::endl;
+	std::cout << "size: " << map1.size() << std::endl;
+	std::cout << "is empty: " << map1.empty() << std::endl;
+	std::cout << "max_size: " << map1.max_size() << std::endl;
 }
+
+
+//////////////////
+//BUSSIERE
+//////////////////
+void buss(void)
+{
+	ft::vector<int> one;
+	one.push_back(43);
+	one.push_back(42);
+	one.push_back(99);
+	ft::vector<int>::iterator a = one.begin();
+	ft::vector<int>::iterator b = one.end();
+	a++;
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+	ft::vector<int> two(2, 66);
+	ft::vector<int> three(2, 33);
+	one.insert(one.begin(), two.begin(), two.end());
+	ft::vector<int>::iterator c = one.begin();
+	c += 1;
+	one.insert(c, three.begin(), three.end());
+	a = one.begin();
+	b = one.end();
+	while (a != b){
+		std::cout << *a << std::endl;
+		a++;
+	}
+}
+
 
 int main(int argc, char *argv[]){
 	if (argc != 2){
@@ -392,6 +328,8 @@ int main(int argc, char *argv[]){
 		go_map();
 	else if (!strcmp(argv[1], "vector"))
 		go_vector();
+	else if (!strcmp(argv[1], "buss"))
+		buss();
 	else
 		std::cout << "USE: ./container container_to_test" << std::endl;
 	return 1;
